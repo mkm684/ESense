@@ -1,11 +1,16 @@
+//This code will allow you to run the pulse sensor and the temperature sensor simultaenously
+
+
 #define USE_ARDUINO_INTERRUPTS true //set up low level interrupts for most accruate BPM math
 # include <PulseSensorPlayground.h> //includes the pulsesensor playground library
  
- 
+ ///Temperature Sensor 
 int sensePin = A0;  //This is the Arduino Pin that will read the sensor output
 int sensorInput;    //The variable we will use to store the sensor input
 double temp;        //The variable we will use to store temperature in degrees celcius. High body temperatures are 40+, sensor accuracry is +/- 2 degrees 
 
+
+//Pulse Sensor
 int beatPin=A2; //programming the pulse sensor 
 int beatInput;
 int Threshold= 550; //Determine which signal to count as a beat and which to ignore 
