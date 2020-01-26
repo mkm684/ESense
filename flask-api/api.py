@@ -8,7 +8,7 @@ import re
 class temp(threading.Thread):
 	def __init__(self):
 	    threading.Thread.__init__(self)
-	    self.latest_temp = 10
+	    self.latest_temp = 11
 	    try:
 	    	self.ser = serial.Serial('/dev/ttyACM0',9600)
 	    except  Exception as e:
@@ -18,7 +18,10 @@ class temp(threading.Thread):
 
 	def run(self):
 		while True:
-			ser_out = self.ser.readline()
+			try:
+				ser_out = self.ser.readline()
+			except Exception as e:
+				print("problem with reading the data")
 			ser_out_char = re.findall(r'\d+', ser_out)
 			ser_out_int = [int(s) for s in ser_out_char[0].split() if s.isdigit()]
 			self.latest_temp = ser_out_int[0]
