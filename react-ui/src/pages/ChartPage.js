@@ -25,10 +25,10 @@ function getRandomArbitrary(min, max) {
 
 const getData = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:5000/result');
+      const res = await axios.get('http://9704c4e0.ngrok.io/result');
       return res.data
     } catch (err) {
-      alert('Oh hey. Something went wrong...');
+      console.log('Oh hey. Something went wrong...');
     }
 }
 
