@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 import { getColor } from 'utils/colors';
-import { randomNum } from 'utils/demos';
 
 import { Row, Col, Card, CardHeader, CardBody } from 'reactstrap';
 
@@ -27,23 +26,10 @@ function getRandomArbitrary(min, max) {
 const getData = async () => {
     try {
       const res = await axios.get('http://127.0.0.1:5000/result');
-      console.log('got Something2')
       return res.data
     } catch (err) {
       alert('Oh hey. Something went wrong...');
     }
-}
-
-function createGist() {
-  fetch('http://127.0.0.1:5000/result', {
-      method: 'get',
-    }).then(function(response) {
-      console.log('got Something')
-      return response.json();
-    }).then(function(data) {
-      console.log(data)
-      return data
-    });
 }
 
 const genLineData = (moreData = {}, moreData2 = {}) => {
@@ -76,14 +62,15 @@ const options = {
       {
         type: "realtime",
         realtime: {
-          onRefresh: function(chart) {
+          onRefresh: async function(chart) {
+            let v = await getData()
             chart.data.datasets[0].data.push({
                 x: Date.now(),
-                y: getRandomArbitrary(100, 60)
+                y: v
               });
             chart.data.datasets[1].data.push({
                 x: Date.now(),
-                y: 88
+                y: 37
               });
           },
           delay: 2000
@@ -103,11 +90,11 @@ const options2 = {
           onRefresh: function(chart) {
             chart.data.datasets[0].data.push({
                 x: Date.now(),
-                y: getRandomArbitrary(41, 35)
+                y: getRandomArbitrary(100, 60)
               });
             chart.data.datasets[1].data.push({
                 x: Date.now(),
-                y: 37
+                y: 88
               });
           },
           delay: 2000
@@ -126,7 +113,7 @@ const ChartPage_ret = () => {
             <CardBody>
               <Line
                 data={genLineData()}
-                options={options}
+                options={options2}
               />
             </CardBody>
           </Card>
@@ -138,7 +125,7 @@ const ChartPage_ret = () => {
             <CardBody>
               <Line 
                 data={genLineData({ fill: false }, { fill: false })} 
-                options={options2}
+                options={options}
               />
             </CardBody>
           </Card>
